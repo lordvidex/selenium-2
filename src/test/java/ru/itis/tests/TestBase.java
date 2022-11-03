@@ -1,19 +1,14 @@
 package ru.itis.tests;
 
-import org.junit.jupiter.api.*;
+import org.junit.Before;
 import ru.itis.AppManager;
 
 public class TestBase {
     protected AppManager app;
 
-    @BeforeEach
+    @Before
     public void setupTest() {
-       app = new AppManager();
+       app = AppManager.getInstance();
     }
 
-    @AfterEach
-    public void tearDown() {
-        app.stop();
-        Assertions.assertEquals("", app.getVerificationErrors().toString());
-    }
 }

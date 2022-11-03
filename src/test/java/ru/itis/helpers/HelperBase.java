@@ -2,7 +2,10 @@ package ru.itis.helpers;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import ru.itis.AppManager;
+
+import java.util.Optional;
 
 public class HelperBase {
     protected WebDriver driver;
@@ -20,6 +23,14 @@ public class HelperBase {
         driver.findElement(By.id(id)).clear();
 
         driver.findElement(By.id(id)).sendKeys(value);
+    }
+
+    protected Optional<WebElement> findElementSafe(By by) {
+        try {
+            return Optional.ofNullable(driver.findElement(by));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 
     protected void fillFieldByName(String value, String fieldName) {

@@ -8,10 +8,26 @@ public class NavigationHelper extends HelperBase {
     }
 
     public void openLoginPage() {
-        driver.navigate().to(manager.getBaseURL() + "/login");
+        goTo(manager.getBaseURL() + "/login");
     }
 
     public void openNewRepositoryPage() {
-        driver.navigate().to(manager.getBaseURL() + "/new");
+        goTo(manager.getBaseURL() + "/new");
+    }
+
+    public void openRepositoryPage(String repositoryName) {
+        goTo(manager.getBaseURL() + "/" + repositoryName);
+    }
+
+    public void openFilePage(String repositoryName, String fileName) {
+        goTo(manager.getBaseURL() + "/" + repositoryName + "/blob/master/" + fileName);
+    }
+
+    public void openFileEditPage(String repositoryName, String fileName) {
+        goTo(manager.getBaseURL() + "/" + repositoryName + "/edit/master/" + fileName);
+    }
+
+    public void goTo(String url) {
+        driver.navigate().to(url);
     }
 }

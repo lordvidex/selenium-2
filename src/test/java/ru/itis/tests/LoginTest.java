@@ -1,6 +1,6 @@
 package ru.itis.tests;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import ru.itis.models.AccountData;
 
 public class LoginTest extends TestBase {
