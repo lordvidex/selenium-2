@@ -3,10 +3,7 @@ package ru.itis;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import ru.itis.helpers.FileHelper;
-import ru.itis.helpers.LoginHelper;
-import ru.itis.helpers.NavigationHelper;
-import ru.itis.helpers.RepositoryHelper;
+import ru.itis.helpers.*;
 
 import static java.lang.ref.Cleaner.*;
 
@@ -25,6 +22,8 @@ public class AppManager implements Cleanable {
 
     private final FileHelper file;
 
+    private final TestDataHelper data;
+
     public static AppManager getInstance() {
         if (app.get() == null) {
             app.set(new AppManager());
@@ -40,6 +39,7 @@ public class AppManager implements Cleanable {
         auth = new LoginHelper(this);
         file = new FileHelper(this);
         repository = new RepositoryHelper(this);
+        data = new TestDataHelper(this);
     }
 
     @Override

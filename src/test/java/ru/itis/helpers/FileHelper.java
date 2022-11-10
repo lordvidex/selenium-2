@@ -23,13 +23,22 @@ public class FileHelper extends HelperBase {
         clickItemById("submit-file");
     }
 
-    public FileData getCreatedFile(String repoName) {
+    public FileData getCreatedFile(String repoName, String nameHint) {
         String filesPage = manager.getBaseURL() + "/" + repoName + "/tree/master";
         if (!driver.getCurrentUrl().equals(filesPage)) {
             manager.getNavigation().goTo(filesPage);
         }
         var elements = driver.findElements(By.cssSelector("div.Box-row"));
         WebElement lastElement = elements.get(elements.size() - 1);
+        if (nameHint != null) {
+            // check for element with name in elements and set it to lastElement
+            for (WebElement element : elements) {
+                if (element.findElement(By.cssSelector("a.Link--primary")).getText().equals(nameHint)) {
+                    lastElement = element;
+                    break;
+                }
+            }
+        }
         // extract fileData from lastElement
         String name = lastElement.findElement(By.cssSelector("a.Link--primary")).getText();
         String commit = lastElement.findElement(By.cssSelector("a.Link--secondary")).getText();
@@ -79,16 +88,16 @@ public class FileHelper extends HelperBase {
      * This function assumes that you have navigated to the file page
      * Also, the function is safe i.e. it does not throw when elements that are required for deletion are not found.
      */
-    public void deleteFiles(Collection<FileData> files) {
+    public void deleteFiles(String repositoryName, Collection<FileData> files) {
         Set<String> fileNameSet = new HashSet<>();
         for (FileData file : files) {
             fileNameSet.add(file.getName());
         }
-       manager.getNavigation().openRepositoryPage("lordvidex/selenium-test");
+       manager.getNavigation().openRepositoryPage(repositoryName);
        driver.findElements(By.cssSelector("a.Link--primary")).forEach(element -> {
            try {
                if (fileNameSet.contains(element.getText())) {
-                   manager.getNavigation().openFilePage("lordvidex/selenium-test", element.getText());
+                   manager.getNavigation().openFilePage(repositoryName, element.getText());
                    clickDeleteBtn();
                }
            } catch (Exception ignored) {}

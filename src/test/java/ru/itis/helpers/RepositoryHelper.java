@@ -10,7 +10,7 @@ public class RepositoryHelper extends HelperBase {
     }
 
     public void createRepository(RepositoryData data) {
-        fillFieldById(data.getName(), "repository_name");
+        fillFieldById(data.getName().split("/")[1], "repository_name");
         fillFieldById(data.getDescription(), "repository_description");
         if (data.isPrivate()) {
             clickItemById("repository_visibility_private");

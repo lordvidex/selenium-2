@@ -1,17 +1,19 @@
 package ru.itis.models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-public class EditFileData extends FileData {
+@AllArgsConstructor
+@NoArgsConstructor
+public class EditFileData {
     private String newFileName;
     private String newCommit;
+    private String name;
+    private String commit;
+    private String repositoryName;
 
-    public EditFileData(String name, String repositoryName, String commit, String newFileName, String newCommit) {
-        super(name, repositoryName, commit);
-        this.newFileName = newFileName;
-        this.newCommit = newCommit;
+    public FileData toFile() {
+        return new FileData(newFileName, getRepositoryName(), newCommit);
     }
 }
