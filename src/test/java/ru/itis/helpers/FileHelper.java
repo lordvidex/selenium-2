@@ -40,6 +40,30 @@ public class FileHelper extends HelperBase {
                 .build();
     }
 
+    public boolean notFound(Collection<FileData> files) {
+        for (FileData file : files) {
+            if (fileExists(file)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean fileExists(FileData file) {
+        String filesPage = manager.getBaseURL() + "/" + file.getRepositoryName() + "/tree/master";
+        if (!driver.getCurrentUrl().equals(filesPage)) {
+            manager.getNavigation().goTo(filesPage);
+        }
+        var elements = driver.findElements(By.cssSelector("div.Box-row"));
+        for (WebElement element : elements) {
+            String name = element.findElement(By.cssSelector("a.Link--primary")).getText();
+            if (name.equals(file.getName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void editFile(EditFileData file) {
         if(file.getNewFileName() != null) {
             fillFieldByName(file.getNewFileName(), "filename");

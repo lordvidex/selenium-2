@@ -24,4 +24,10 @@ public class RepositoryHelper extends HelperBase {
         }
         driver.findElement(By.className("btn-primary")).click();
     }
+
+    public RepositoryData getCreatedRepository() {
+        String repoName = driver.findElement(By.cssSelector("strong[itemprop=\"name\"]")).getText();
+        boolean isPrivate = driver.findElement(By.xpath("//span[text()=\"Private\"]")).isDisplayed();
+        return  new RepositoryData(repoName, null, isPrivate, false);
+    }
 }

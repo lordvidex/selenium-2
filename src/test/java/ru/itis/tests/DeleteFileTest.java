@@ -1,5 +1,6 @@
 package ru.itis.tests;
 
+import org.junit.Assert;
 import org.junit.Test;
 import ru.itis.models.FileData;
 
@@ -22,5 +23,6 @@ public class DeleteFileTest extends TestBase {
             );
         }};
         app.getFile().deleteFiles(testFiles);
+        Assert.assertTrue(app.getFile().notFound(testFiles));
     }
 }
