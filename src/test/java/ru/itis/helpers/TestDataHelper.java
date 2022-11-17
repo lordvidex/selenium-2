@@ -36,6 +36,9 @@ public class TestDataHelper extends HelperBase {
 
     private void readDataFile() throws IOException {
         InputStream is = Test.class.getResourceAsStream("/test-data.json");
+        if (is == null) {
+            throw new IOException("Problem: settings file, test-data.json not found");
+        }
         // read to a map and extract each class
         HashMap<String, Object> map =  mapper.readValue(is, HashMap.class);
         editedFile = mapper.convertValue(map.get("edited_file"), EditFileData.class);

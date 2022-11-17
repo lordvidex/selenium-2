@@ -5,7 +5,7 @@ import org.junit.Test;
 import ru.itis.models.RepositoryData;
 
 
-public class CreateRepoTest extends TestBase {
+public class CreateRepoTest extends AuthBase {
     @Test
     public void repoCreationTest() throws InterruptedException {
         RepositoryData repo = app.getData().getRepo();
